@@ -282,11 +282,22 @@ int String::strcmp(const char *left, const char *right) {
 
 
 int String::strncmp(const char *left, const char *right, int n) {
+    if (n == 0) {
+        return 0;
+    }
+
     for ( ; n > 0; left++, right++, n--) {
+
+        if (*left == '\0') {
+            return *right == '\0' || n == 1 ? 0 : -1;
+        }
+
+        if (*right == '\0') {
+            return 1;
+        }
+
         if (*left != *right) {
             return *(unsigned char *)left - *(unsigned char *)right;
-        } else if (*left == '\0') {
-            return 0;
         }
     }
     return 0;
