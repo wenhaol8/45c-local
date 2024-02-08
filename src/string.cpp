@@ -79,8 +79,8 @@ const char &String::operator[](int index) const {
 String String::operator+(const String& s) const {
     int newSize = size() + s.size();
     String result(newSize + 1);
-    std::strcpy(result.buf, buf);
-    std::strcat(result.buf, s.buf);
+    strcpy(result.buf, buf);
+    strcat(result.buf, s.buf);
     return result;
 }
 
@@ -88,8 +88,8 @@ String String::operator+(const String& s) const {
 String& String::operator+=(const String& s) {
     int newSize = size() + s.size();
     char* newBuf = new char[newSize + 1];
-    std::strcpy(newBuf, buf);
-    std::strcat(newBuf, s.buf);
+    strcpy(newBuf, buf);
+    strcat(newBuf, s.buf);
     delete[] buf;
     buf = newBuf;
     return *this;
