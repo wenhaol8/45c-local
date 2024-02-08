@@ -46,28 +46,46 @@ int String::size() const {
 }
 
 // Index Operator
-char& String::operator[](int index) {
-    return buf[index]; // Add bounds checking in real implementation
+char &String::operator[](int index) {
+    if (!in_bounds(index)) {
+        std::cerr << "ERROR" << std::endl;
+        // Assuming there is a dummy character to return in case of error. Adjust as necessary.
+        static char dummy = '\0';
+        return dummy; // Return a reference to a dummy character to avoid crashing.
+    }
+    return buf[index];
 }
 
-// Const Index Operator
-const char& String::operator[](int index) const {
-    return buf[index]; // Add bounds checking in real implementation
+// Modify the const operator[]
+const char &String::operator[](int index) const {
+    if (!in_bounds(index)) {
+        std::cerr << "ERROR" << std::endl;
+        // Assuming there is a dummy character to return in case of error. Adjust as necessary.
+        static const char dummy = '\0';
+        return dummy; // Return a reference to a dummy character to avoid crashing.
+    }
+    return buf[index];
 }
 
 // Concatenation Operator
 String String::operator+(const String& s) const {
-    String result;
-    int newSize = size() + s.size(); // Plus null terminator
-    result.buf = new char[newSize + 1];
-    std::strcpy(result.buf, buf);
-    std::strcat(result.buf, s.buf);
+    int newSize = size() + s.size(); // Calculate new size without null terminator
+    char* newBuf = new char[newSize + 1]; // Allocate memory for concatenated string
+    std::strcpy(newBuf, buf); // Copy current string
+    std::strcat(newBuf, s.buf); // Concatenate with s
+    String result(newBuf); // Create new String object
+    delete[] newBuf; // Delete temporary buffer
     return result;
 }
 
-// Concatenation and Assignment Operator
+// Optimized operator+=
 String& String::operator+=(const String& s) {
-    *this = *this + s; // Leverages operator+
+    int newSize = size() + s.size(); // Calculate new size without null terminator
+    char* newBuf = new char[newSize + 1]; // Allocate memory for new size
+    std::strcpy(newBuf, buf); // Copy current string
+    std::strcat(newBuf, s.buf); // Append s to current string
+    delete[] buf; // Delete old buffer
+    buf = newBuf; // Point buf to new buffer
     return *this;
 }
 
@@ -90,14 +108,14 @@ void String::read(std::istream& in) {
 
 String String::reverse() const {
     int len = size();
-    char* reversed = new char[len + 1];
+    char* reversedBuf = new char[len + 1]; // Allocate memory for reversed string
     for (int i = 0; i < len; ++i) {
-        reversed[i] = buf[len - 1 - i];
+        reversedBuf[i] = buf[len - i - 1]; // Reverse string content
     }
-    reversed[len] = '\0';
-    String reversedString(reversed);
-    delete[] reversed; // Clean up the temporary buffer
-    return reversedString;
+    reversedBuf[len] = '\0'; // Null-terminate
+    String result(reversedBuf); // Create new String object
+    delete[] reversedBuf; // Delete temporary buffer
+    return result;
 }
 
 int String::indexOf(char c) const {
