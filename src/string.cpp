@@ -48,7 +48,7 @@ int String::size() const {
 // Index Operator
 char &String::operator[](int index) {
     if (!in_bounds(index)) {
-        std::cerr << "ERROR" << std::endl;
+        std::cout << "ERROR" << std::endl;
         // Assuming there is a dummy character to return in case of error. Adjust as necessary.
         static char dummy = '\0';
         return dummy; // Return a reference to a dummy character to avoid crashing.
@@ -56,25 +56,23 @@ char &String::operator[](int index) {
     return buf[index];
 }
 
-// Modify the const operator[]
+
 const char &String::operator[](int index) const {
     if (!in_bounds(index)) {
-        std::cerr << "ERROR" << std::endl;
-        // Assuming there is a dummy character to return in case of error. Adjust as necessary.
+        std::cout << "ERROR" << std::endl;
         static const char dummy = '\0';
-        return dummy; // Return a reference to a dummy character to avoid crashing.
+        return dummy;
     }
     return buf[index];
 }
 
-// Concatenation Operator
 String String::operator+(const String& s) const {
-    int newSize = size() + s.size(); // Calculate new size without null terminator
-    char* newBuf = new char[newSize + 1]; // Allocate memory for concatenated string
-    std::strcpy(newBuf, buf); // Copy current string
-    std::strcat(newBuf, s.buf); // Concatenate with s
-    String result(newBuf); // Create new String object
-    delete[] newBuf; // Delete temporary buffer
+    int newSize = size() + s.size();
+    char* newBuf = new char[newSize + 1];
+    std::strcpy(newBuf, buf);
+    std::strcat(newBuf, s.buf);
+    String result(newBuf);
+    delete[] newBuf;
     return result;
 }
 
