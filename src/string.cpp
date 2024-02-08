@@ -1,9 +1,8 @@
 #include "string.hpp"
-#include <cstring> // For strlen, strcpy, etc.
-#include <algorithm> // For std::swap
-#include <iostream> // For std::ostream, std::istream
+#include <cstring>
+#include <iostream>
+#include <sstream>
 
-// Helper function to safely allocate and copy strings
 char* allocate_and_copy(const char* src) {
     if (src == nullptr) {
         return nullptr;
@@ -96,30 +95,32 @@ String& String::operator+=(const String& s) {
     return *this;
 }
 
-// Print Method
+
 void String::print(std::ostream& out) const {
     out << this->buf;
 
 }
 
-// Read Method
 void String::read(std::istream& in) {
-    std::string temp; // Use std::string for convenience
-    std::getline(in, temp); // Read the entire line
+    std::string line;
+    std::getline(in, line);
+    std::istringstream iss(line);
 
-    // Now, allocate or reallocate the buffer to fit the new data
-    delete[] this->buf; // Free the existing buffer
-    this->buf = new char[temp.length() + 1]; // Allocate new buffer
-    std::strcpy(this->buf, temp.c_str()); // Copy data into the new buffer
+    std::string word;
+    if (iss >> word) {
+        delete[] buf;
+        buf = new char[word.length() + 1];
+        std::strcpy(buf, word.c_str());
+    }
 }
 
 String String::reverse() const {
     int len = size();
-    String result(len + 1); // +1 为了空终止符
+    String result(len + 1);
     for (int i = 0; i < len; ++i) {
         result.buf[i] = buf[len - i - 1];
     }
-    result.buf[len] = '\0'; // 确保空终止
+    result.buf[len] = '\0';
     return result;
 }
 
