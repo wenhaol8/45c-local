@@ -176,9 +176,11 @@ bool String::operator>=(const String& s) const {
 
 
 int String::strlen(const char *s) {
-    const char *sc;
-    for (sc = s; *sc != '\0'; ++sc) { }
-    return sc - s;
+    int length = 0;
+    while (s[length] != '\0') {
+        ++length;
+    }
+    return length;
 }
 
 char *String::strcpy(char *dest, const char *src) {
