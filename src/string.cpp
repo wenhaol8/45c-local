@@ -80,12 +80,12 @@ const char &String::operator[](int index) const {
 
 String String::operator+(const String& s) const {
     int newSize = size() + s.size();
-    char* newBuf = new char[newSize + 1];
-    std::strcpy(newBuf, buf);
-    std::strcat(newBuf, s.buf);
-    String result(newBuf);
+    String result(newSize + 1);
+    std::strcpy(result.buf, buf);
+    std::strcat(result.buf, s.buf);
     return result;
 }
+
 // Optimized operator+=
 String& String::operator+=(const String& s) {
     int newSize = size() + s.size();
@@ -348,24 +348,16 @@ char *String::strdup(const char *src) {
     // Return the pointer to the duplicate
     return dup;
 }
-/*
-String::String(String &&s) {
-    s.buf = nullptr;
-}
 
-String& String::operator=(String &&s) noexcept {
-    if (this != &s) {
-        delete[] buf;
-        buf = s.buf;
-        s.buf = nullptr;
-    }
-    return *this;
-}*/
 String::String(String &&s)  noexcept : buf(s.buf) {
     s.buf = nullptr; // Leave source in a valid state
 }
 
-// Move Assignment Operator
+String::String(int length) : buf(new char[length]) {
+    std::fill_n(buf, length, '\0');
+}
+
+
 
 
 std::ostream &operator<<(std::ostream &out,const String& s) {
