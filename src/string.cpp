@@ -303,6 +303,25 @@ const char *String::strstr(const char *haystack, const char *needle) {
     return nullptr;
 }
 
+char *String::strdup(const char *src) {
+    if (src == nullptr) {
+        return nullptr; // Handle null input string
+    }
+
+    // Calculate length of src plus one for the null terminator
+    int len = String::strlen(src) + 1;
+
+    // Allocate memory for duplicate
+    char *dup = new char[len];
+
+    // Copy string into allocated memory
+    for (int i = 0; i < len; ++i) {
+        dup[i] = src[i];
+    }
+
+    // Return the pointer to the duplicate
+    return dup;
+}
 
 
 
