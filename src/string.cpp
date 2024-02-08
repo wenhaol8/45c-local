@@ -346,7 +346,19 @@ String& String::operator=(String &&s) noexcept {
     }
     return *this;
 }*/
+String::String(String &&s)  noexcept : buf(s.buf) {
+    s.buf = nullptr; // Leave source in a valid state
+}
 
+// Move Assignment Operator
+String& String::operator=(String &&s)  noexcept {
+    if (this != &s) { // Self-assignment check
+        delete[] buf; // Free existing resources
+        buf = s.buf;  // Transfer ownership of resources
+        s.buf = nullptr; // Leave source in a valid state
+    }
+    return *this;
+}
 
 std::ostream &operator<<(std::ostream &out,const String& s) {
     s.print(out);
