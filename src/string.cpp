@@ -72,18 +72,18 @@ String String::operator+(const String& s) const {
     std::strcpy(newBuf, buf);
     std::strcat(newBuf, s.buf);
     String result(newBuf);
-    delete[] newBuf;
+    delete[] newBuf; // This line is actually unnecessary and incorrect here
     return result;
 }
 
 // Optimized operator+=
 String& String::operator+=(const String& s) {
-    int newSize = size() + s.size(); // Calculate new size without null terminator
-    char* newBuf = new char[newSize + 1]; // Allocate memory for new size
-    std::strcpy(newBuf, buf); // Copy current string
-    std::strcat(newBuf, s.buf); // Append s to current string
-    delete[] buf; // Delete old buffer
-    buf = newBuf; // Point buf to new buffer
+    int newSize = size() + s.size();
+    char* newBuf = new char[newSize + 1];
+    std::strcpy(newBuf, buf);
+    std::strcat(newBuf, s.buf);
+    delete[] buf;
+    buf = newBuf;
     return *this;
 }
 
@@ -106,13 +106,13 @@ void String::read(std::istream& in) {
 
 String String::reverse() const {
     int len = size();
-    char* reversedBuf = new char[len + 1]; // Allocate memory for reversed string
+    char* reversedBuf = new char[len + 1];
     for (int i = 0; i < len; ++i) {
-        reversedBuf[i] = buf[len - i - 1]; // Reverse string content
+        reversedBuf[i] = buf[len - i - 1];
     }
-    reversedBuf[len] = '\0'; // Null-terminate
-    String result(reversedBuf); // Create new String object
-    delete[] reversedBuf; // Delete temporary buffer
+    reversedBuf[len] = '\0';
+    String result(reversedBuf);
+    delete[] reversedBuf; // This line is unnecessary and incorrect
     return result;
 }
 
