@@ -29,11 +29,23 @@ String::~String() {
 }
 
 // Copy Assignment Operator using Copy-and-Swap Idiom
-String& String::operator=(String s) {
-    swap(s);
+String& String::operator=(const String &s) {
+    if (this != &s) {
+        String temp(s);
+        swap(temp);
+    }
     return *this;
 }
 
+
+String& String::operator=(String &&s) noexcept {
+    if (this != &s) {
+        delete[] buf;
+        buf = s.buf;
+        s.buf = nullptr;
+    }
+    return *this;
+}
 
 // Swap Method
 void String::swap(String& s) {
@@ -351,14 +363,7 @@ String::String(String &&s)  noexcept : buf(s.buf) {
 }
 
 // Move Assignment Operator
-String& String::operator=(String &&s)  noexcept {
-    if (this != &s) { // Self-assignment check
-        delete[] buf; // Free existing resources
-        buf = s.buf;  // Transfer ownership of resources
-        s.buf = nullptr; // Leave source in a valid state
-    }
-    return *this;
-}
+
 
 std::ostream &operator<<(std::ostream &out,const String& s) {
     s.print(out);
