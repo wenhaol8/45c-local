@@ -102,15 +102,11 @@ void String::print(std::ostream& out) const {
 }
 
 void String::read(std::istream& in) {
-    std::string line;
-    std::getline(in, line);
-    std::istringstream iss(line);
-
     std::string word;
-    if (iss >> word) {
-        delete[] buf;
-        buf = new char[word.length() + 1];
-        std::strcpy(buf, word.c_str());
+    if (in >> word) {
+        delete[] this->buf;
+        this->buf = new char[word.size() + 1];
+        std::strcpy(this->buf, word.c_str());
     }
 }
 
