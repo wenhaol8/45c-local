@@ -341,6 +341,9 @@ char *String::strdup(const char *src) {
     return dup;
 }
 
+String::String(String &&s) {
+    s.buf = nullptr;
+}
 
 
 std::ostream &operator<<(std::ostream &out,const String& s) {
