@@ -95,3 +95,39 @@ TEST(StringFunction, strstr) {
     result = String::strstr(haystack, needle);
     EXPECT_EQ(result, nullptr);
 }
+TEST(StringFunction, StrncmpEqual) {
+    EXPECT_EQ(strncmp("hello", "hello", 5), 0);
+}
+
+TEST(StringFunction, StrncmpNotEqual) {
+    EXPECT_NE(strncmp("hello", "world", 5), 0);
+}
+
+TEST(StringFunction, StrncmpPrefix) {
+    EXPECT_EQ(strncmp("hello", "hel", 3), 0);
+}
+
+TEST(StringFunction, StrncmpEmptyString) {
+    EXPECT_EQ(strncmp("", "hello", 5), -1);
+    EXPECT_EQ(strncmp("hello", "", 5), 1);
+    EXPECT_EQ(strncmp("", "", 0), 0);
+}
+
+TEST(StringFunction, StrstrCompleteMatch) {
+    EXPECT_EQ(strstr("hello", "hello"), "hello");
+}
+
+TEST(StringFunction, StrstrPartialMatch) {
+    const char* str = "hello world";
+    EXPECT_EQ(strstr(str, "world") - str, 6);
+}
+
+TEST(StringFunction, StrstrNoMatch) {
+    EXPECT_EQ(strstr("hello", "world"), nullptr);
+}
+
+TEST(StringFunction, StrstrEmptyString) {
+    const char* str = "hello";
+    EXPECT_EQ(strstr(str, ""), str);
+    EXPECT_EQ(strstr("", "world"), nullptr);
+}
