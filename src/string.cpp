@@ -61,9 +61,8 @@ int String::size() const {
 char &String::operator[](int index) {
     if (!in_bounds(index)) {
         std::cout << "ERROR" << std::endl;
-        // Assuming there is a dummy character to return in case of error. Adjust as necessary.
         static char dummy = '\0';
-        return dummy; // Return a reference to a dummy character to avoid crashing.
+        return dummy;
     }
     return buf[index];
 }
@@ -116,13 +115,11 @@ void String::read(std::istream& in) {
 
 String String::reverse() const {
     int len = size();
-    char* reversedBuf = new char[len + 1];
+    String result(len + 1); // +1 为了空终止符
     for (int i = 0; i < len; ++i) {
-        reversedBuf[i] = buf[len - i - 1];
+        result.buf[i] = buf[len - i - 1];
     }
-    reversedBuf[len] = '\0';
-    String result(reversedBuf);
-    delete[] reversedBuf; // This line is unnecessary and incorrect
+    result.buf[len] = '\0'; // 确保空终止
     return result;
 }
 
