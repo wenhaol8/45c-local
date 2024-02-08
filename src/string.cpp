@@ -54,7 +54,7 @@ void String::swap(String& s) {
 
 // Size Method
 int String::size() const {
-    return std::strlen(buf);
+    return strlen(buf);
 }
 
 // Index Operator
