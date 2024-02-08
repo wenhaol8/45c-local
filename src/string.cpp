@@ -84,10 +84,8 @@ String String::operator+(const String& s) const {
     std::strcpy(newBuf, buf);
     std::strcat(newBuf, s.buf);
     String result(newBuf);
-    delete[] newBuf; // This line is actually unnecessary and incorrect here
     return result;
 }
-
 // Optimized operator+=
 String& String::operator+=(const String& s) {
     int newSize = size() + s.size();
