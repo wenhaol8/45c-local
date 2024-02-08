@@ -345,7 +345,7 @@ String::String(String &&s) {
     s.buf = nullptr;
 }
 
-String& String::operator=(String &&s){
+String& String::operator=(String &&s) noexcept {
     if (this != &s) {
         delete[] buf;
         buf = s.buf;

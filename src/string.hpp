@@ -20,7 +20,7 @@ public:
     String &operator=(String s);
 
     // assign to this string by moving from string s
-    String &operator=(String &&s);
+    String &operator=(String &&s) noexcept;
     // allow indexing this string with notation s[i]
     char &operator[](int index);
 
