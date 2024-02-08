@@ -68,6 +68,12 @@ TEST(StringFunction, strncmp) {
     EXPECT_EQ(String::strncmp("abcde", "abcxy", 3), 0);
     EXPECT_LT(String::strncmp("abc", "bcd", 3), 0);
     EXPECT_GT(String::strncmp("bcd", "abc", 3), 0);
+    EXPECT_EQ(String::strncmp("hello", "hello", 5), 0);
+    EXPECT_NE(String::strncmp("hello", "world", 5), 0);
+    EXPECT_EQ(String::strncmp("hello", "hel", 3), 0);
+    EXPECT_EQ(String::strncmp("", "hello", 5), -1);
+    EXPECT_EQ(String::strncmp("hello", "", 5), 1);
+    EXPECT_EQ(String::strncmp("", "", 0), 0);
 }
 
 TEST(StringFunction, reverse_cpy) {
@@ -94,40 +100,14 @@ TEST(StringFunction, strstr) {
     needle = "planet";
     result = String::strstr(haystack, needle);
     EXPECT_EQ(result, nullptr);
-}
-TEST(StringFunction, StrncmpEqual) {
-    EXPECT_EQ(strncmp("hello", "hello", 5), 0);
-}
 
-TEST(StringFunction, StrncmpNotEqual) {
-    EXPECT_NE(strncmp("hello", "world", 5), 0);
-}
+    EXPECT_EQ(String::strstr("hello", "hello"), "hello");
 
-TEST(StringFunction, StrncmpPrefix) {
-    EXPECT_EQ(strncmp("hello", "hel", 3), 0);
-}
-
-TEST(StringFunction, StrncmpEmptyString) {
-    EXPECT_EQ(strncmp("", "hello", 5), -1);
-    EXPECT_EQ(strncmp("hello", "", 5), 1);
-    EXPECT_EQ(strncmp("", "", 0), 0);
-}
-
-TEST(StringFunction, StrstrCompleteMatch) {
-    EXPECT_EQ(strstr("hello", "hello"), "hello");
-}
-
-TEST(StringFunction, StrstrPartialMatch) {
     const char* str = "hello world";
-    EXPECT_EQ(strstr(str, "world") - str, 6);
-}
+    EXPECT_EQ(String::strstr(str, "world") - str, 6);
+    EXPECT_EQ(String::strstr("hello", "world"), nullptr);
 
-TEST(StringFunction, StrstrNoMatch) {
-    EXPECT_EQ(strstr("hello", "world"), nullptr);
-}
-
-TEST(StringFunction, StrstrEmptyString) {
-    const char* str = "hello";
-    EXPECT_EQ(strstr(str, ""), str);
-    EXPECT_EQ(strstr("", "world"), nullptr);
+    const char* str2 = "hello";
+    EXPECT_EQ(String::strstr(str2, ""), str2);
+    EXPECT_EQ(String::strstr("", "world"), nullptr);
 }
