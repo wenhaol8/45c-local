@@ -345,6 +345,15 @@ String::String(String &&s) {
     s.buf = nullptr;
 }
 
+String& String::operator=(String &&s){
+    if (this != &s) {
+        delete[] buf;
+        buf = s.buf;
+        s.buf = nullptr;
+    }
+    return *this;
+}
+
 
 std::ostream &operator<<(std::ostream &out,const String& s) {
     s.print(out);
