@@ -348,7 +348,9 @@ String::String(String &&s)  noexcept : buf(s.buf) {
 }
 
 String::String(int length) : buf(new char[length]) {
-    std::fill_n(buf, length, '\0');
+    for (int i = 0; i < length; ++i) {
+        buf[i] = '\0';
+    }
 }
 
 
