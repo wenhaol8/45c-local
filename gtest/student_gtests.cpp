@@ -24,37 +24,74 @@ TEST(StringFunction, strcpy) {
 }
 
 TEST(StringFunction, strdup) {
-    EXPECT_TRUE(false);
+    char* result = String::strdup("test");
+    EXPECT_STREQ(result, "test");
+    delete[] result; // Remember to free the memory allocated by strdup
 }
 
 TEST(StringFunction, strncpy) {
-    EXPECT_TRUE(false);
+    char dest[10] = {};
+    String::strncpy(dest, "hello", 5);
+    EXPECT_STREQ(dest, "hello");
+
+    String::strncpy(dest, "world", 3);
+    EXPECT_EQ(dest[0], 'w');
+    EXPECT_EQ(dest[1], 'o');
+    EXPECT_EQ(dest[2], 'r');
+    EXPECT_EQ(dest[3], '\0'); // Ensure it's null-terminated
 }
 
 TEST(StringFunction, strcat) {
-    EXPECT_TRUE(false);
+    char dest[10] = "hi";
+    String::strcat(dest, ", ");
+    String::strcat(dest, "there");
+    EXPECT_STREQ(dest, "hi, there");
 }
 
 TEST(StringFunction, strncat) {
-    EXPECT_TRUE(false);
+    char dest[15] = "hello";
+    String::strncat(dest, " world", 6);
+    EXPECT_STREQ(dest, "hello world");
+
+    String::strncat(dest, "!!!", 2); // Intentionally limiting to 2 characters
+    EXPECT_STREQ(dest, "hello world!!");
 }
 
 TEST(StringFunction, strcmp) {
-    EXPECT_TRUE(false);
+    EXPECT_EQ(String::strcmp("abc", "abc"), 0);
+    EXPECT_LT(String::strcmp("abc", "bcd"), 0);
+    EXPECT_GT(String::strcmp("bcd", "abc"), 0);
 }
 
 TEST(StringFunction, strncmp) {
-    EXPECT_TRUE(false);
+    EXPECT_EQ(String::strncmp("abc", "abc", 3), 0);
+    EXPECT_EQ(String::strncmp("abcde", "abcxy", 3), 0);
+    EXPECT_LT(String::strncmp("abc", "bcd", 3), 0);
+    EXPECT_GT(String::strncmp("bcd", "abc", 3), 0);
 }
 
 TEST(StringFunction, reverse_cpy) {
-    EXPECT_TRUE(false);
+    char dest[5];
+    String::reverse_cpy(dest, "abcd");
+    EXPECT_STREQ(dest, "dcba");
 }
 
 TEST(StringFunction, strchr) {
-    EXPECT_TRUE(false);
+    const char* str = "hello world";
+    const char* result = String::strchr(str, 'w');
+    EXPECT_STREQ(result, "world");
+
+    result = String::strchr(str, 'z');
+    EXPECT_EQ(result, nullptr);
 }
 
 TEST(StringFunction, strstr) {
-    EXPECT_TRUE(false);
+    const char* haystack = "hello world";
+    const char* needle = "world";
+    const char* result = String::strstr(haystack, needle);
+    EXPECT_STREQ(result, "world");
+
+    needle = "planet";
+    result = String::strstr(haystack, needle);
+    EXPECT_EQ(result, nullptr);
 }
