@@ -300,24 +300,17 @@ const char *String::strchr(const char *str, char c) {
 }
 
 const char *String::strstr(const char *haystack, const char *needle) {
-    if (!needle || !*needle) {
+    if (*needle == '\0') {
         return haystack;
     }
 
-    while (*haystack) {
-        const char *h = haystack;
-        const char *n = needle;
-
-        while (*h && *n && *h == *n) {
-            ++h;
-            ++n;
+    int len = strlen(needle);
+    for (const char *p = haystack; (p = strchr(p, needle[0])); ++p) {
+        if (strncmp(p, needle, len) == 0) {
+            return p;
         }
-
-        if (!*n) {
-            return haystack;
-        }
-        ++haystack;
     }
+
     return nullptr;
 }
 
@@ -340,7 +333,7 @@ char *String::strdup(const char *src) {
     // Return the pointer to the duplicate
     return dup;
 }
-
+/*
 String::String(String &&s) {
     s.buf = nullptr;
 }
@@ -352,7 +345,7 @@ String& String::operator=(String &&s) noexcept {
         s.buf = nullptr;
     }
     return *this;
-}
+}*/
 
 
 std::ostream &operator<<(std::ostream &out,const String& s) {
