@@ -286,16 +286,10 @@ int String::strncmp(const char *left, const char *right, int n) {
         return 0;
     }
 
-    for ( ; n > 0; left++, right++, n--) {
-
-        if (*left == '\0') {
-            return *right == '\0' || n == 1 ? 0 : -1;
+    for (; n > 0; left++, right++, n--) {
+        if (*left == '\0' || *right == '\0') {
+            return *left == '\0' && *right == '\0' ? 0 : (*left == '\0' ? -1 : 1);
         }
-
-        if (*right == '\0') {
-            return 1;
-        }
-
         if (*left != *right) {
             return *(unsigned char *)left - *(unsigned char *)right;
         }
