@@ -15,11 +15,11 @@ namespace list {
         return head;
     }
 
-    void free(Node *head) {
-        while (head) {
-            Node *temp = head;
+    void free(Node* head) {
+        while (head != nullptr) {
+            Node* temp = head;
             head = head->next;
-            delete temp;
+            delete temp; // Deallocate the node.
         }
     }
 
@@ -74,10 +74,10 @@ namespace list {
         return len;
     }
 
-    Node *reverse(Node *head) {
-        Node *new_head = nullptr;
-        while (head) {
-            Node *next = head->next;
+    Node* reverse(Node* head) {
+        Node* new_head = nullptr;
+        while (head != nullptr) {
+            Node* next = head->next;
             head->next = new_head;
             new_head = head;
             head = next;

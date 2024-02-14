@@ -35,5 +35,15 @@ TEST(ListTests, Length) {
 // the format of `TEST(ListTests, <TestName>){}`.
 
 TEST(ListTests, ReplaceMe) {
-    EXPECT_TRUE(false);
+    Node* const original_head = list::from_string("test");
+    Node* reversed_head = list::reverse(original_head);
+
+    const char* reversed_content = "tset";
+    for (Node* current = reversed_head; current != nullptr; current = current->next, ++reversed_content) {
+        EXPECT_EQ(current->data, *reversed_content);
+    }
+    EXPECT_EQ(*reversed_content, '\0');
+
+    list::free(original_head);
+    list::free(reversed_head);
 }
