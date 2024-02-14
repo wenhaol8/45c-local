@@ -68,6 +68,9 @@ int String::indexOf(char c) const {
 }
 
 int String::indexOf(const String& s) const {
+    if (s.size() == 0) {
+        return 0;
+    }
     list::Node* node = list::find_list(head, s.head);
     return list::index(head, node);
 }

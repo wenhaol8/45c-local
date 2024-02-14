@@ -47,3 +47,75 @@ TEST(ListTests, ReplaceMe) {
     list::free(original_head);
     list::free(reversed_head);
 }
+
+TEST(ListTests, LengthEmpty) {
+    Node* const head = list::from_string("");
+    EXPECT_EQ(list::length(head), 0);
+    list::free(head);
+}
+
+// Test the find_char function
+TEST(ListTests, FindChar) {
+    Node* const head = list::from_string("hello");
+    Node* const o_node = list::find_char(head, 'o');
+    ASSERT_NE(o_node, nullptr);
+    EXPECT_EQ(o_node->data, 'o');
+    list::free(head);
+}
+
+// Test the compare function for equal lists
+TEST(ListTests, CompareEqual) {
+    Node* const list1 = list::from_string("test");
+    Node* const list2 = list::from_string("test");
+    EXPECT_EQ(list::compare(list1, list2), 0);
+    list::free(list1);
+    list::free(list2);
+}
+
+// Test the compare function for unequal lists
+TEST(ListTests, CompareUnequal) {
+    Node* const list1 = list::from_string("test");
+    Node* const list2 = list::from_string("toast");
+    EXPECT_NE(list::compare(list1, list2), 0);
+    list::free(list1);
+    list::free(list2);
+}
+
+// Test the nth function
+TEST(ListTests, Nth) {
+    Node* const head = list::from_string("hello");
+    Node* const third_node = list::nth(head, 2);
+    ASSERT_NE(third_node, nullptr);
+    EXPECT_EQ(third_node->data, 'l');
+    list::free(head);
+}
+
+// Test the last function
+TEST(ListTests, Last) {
+    Node* const head = list::from_string("hello");
+    Node* const last_node = list::last(head);
+    ASSERT_NE(last_node, nullptr);
+    EXPECT_EQ(last_node->data, 'o');
+    EXPECT_EQ(last_node->next, nullptr);
+    list::free(head);
+}
+
+// Test appending two lists
+TEST(ListTests, Append) {
+    Node* const list1 = list::from_string("hello");
+    Node* const list2 = list::from_string("world");
+    Node* const combined_list = list::append(list1, list2);
+
+    // Check if the combined list is "helloworld"
+    const char* combined_content = "helloworld";
+    for (Node* current = combined_list; current != nullptr; current = current->next, ++combined_content) {
+        EXPECT_EQ(current->data, *combined_content);
+    }
+
+    // Should reach the end of the combined string
+    EXPECT_EQ(*combined_content, '\0');
+
+    list::free(list1);
+    list::free(list2);
+    list::free(combined_list);
+}

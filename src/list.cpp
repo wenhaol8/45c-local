@@ -56,13 +56,23 @@ namespace list {
         return lhs->data - rhs->data;
     }
 
-    int compare(Node *lhs, Node *rhs, int n) {
-        for (int i = 0; lhs && rhs && i < n && lhs->data == rhs->data; ++i) {
+    int compare(Node* lhs, Node* rhs, int n) {
+        int index = 0;
+        while (lhs != nullptr && rhs != nullptr && index < n) {
+            if (lhs->data != rhs->data) {
+                return lhs->data - rhs->data;
+            }
             lhs = lhs->next;
             rhs = rhs->next;
+            ++index;
         }
-        if ((!lhs || !rhs) && n > 0) return 0;  // Reached the end of one list before n
-        return lhs->data - rhs->data;
+
+        if (index == n) return 0;
+        if (lhs == nullptr && rhs == nullptr) return 0;
+        if (lhs == nullptr) return -1;
+        if (rhs == nullptr) return 1;
+
+        return 0;
     }
 
     int length(Node *head) {
