@@ -17,9 +17,9 @@ namespace list {
 
     void free(Node* head) {
         while (head != nullptr) {
-            Node* temp = head;
-            head = head->next;
-            delete temp; // Deallocate the node.
+            Node* temp = head->next;
+            delete head;
+            head = temp;
         }
     }
 
