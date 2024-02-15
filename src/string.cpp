@@ -110,15 +110,11 @@ String String::operator+(const String& s) const {
     return concatenated_string;
 }
 
+
 String& String::operator+=(const String& s) {
-    if (s.head == nullptr) {
-        return *this;
-    }
-    if (this->head == nullptr) {
-        this->head = list::copy(s.head);
-    } else {
-        this->head = list::append(this->head, list::copy(s.head));
-    }
+    list::Node* concatenated_head = list::append(head, s.head);
+    list::free(head);
+    head = concatenated_head;
     return *this;
 }
 
