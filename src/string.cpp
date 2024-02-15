@@ -49,10 +49,10 @@ bool String::in_bounds(int index) const {
 char String::operator[](int index) const {
     if (!in_bounds(index)) {
         std::cout << "ERROR" << std::endl;
-
-        list::Node *node = list::nth(head, index);
-        return node ? node->data : '\0';
+        return '\0';
     }
+    list::Node* node = list::nth(head, index);
+    return node ? node->data : '\0';
 }
 
 int String::size() const {
