@@ -110,6 +110,8 @@ namespace list {
     }
 
     int index(Node *head, Node *node) {
+        if (node == nullptr) return -1;
+
         int idx = 0;
         while (head && head != node) {
             head = head->next;
