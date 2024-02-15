@@ -60,10 +60,9 @@ int String::size() const {
 }
 
 String String::reverse() const {
-    list::Node* reversed_head = list::reverse(head);
-    String reversed_string(reversed_head);
-    list::free(reversed_head);
-    return reversed_string;
+    String reversedString;
+    reversedString.head = list::reverse(this->head);
+    return reversedString;
 }
 
 int String::indexOf(char c) const {
