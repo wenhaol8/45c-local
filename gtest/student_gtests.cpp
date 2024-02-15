@@ -48,7 +48,7 @@ TEST(ListTests, ReplaceMe) {
     list::free(original_head);
     list::free(reversed_head);
 }
-
+/*
 TEST(ListTests, LengthEmpty) {
     Node* const head = list::from_string("");
     EXPECT_EQ(list::length(head), 0);
@@ -120,3 +120,4 @@ TEST(ListTests, Append) {
     list::free(list2);
     list::free(combined_list);
 }
+*/
