@@ -112,9 +112,26 @@ String String::operator+(const String& s) const {
 
 
 String& String::operator+=(const String& s) {
-    list::Node* concatenated_head = list::append(head, s.head);
-    list::free(head);
-    head = concatenated_head;
+    if (s.head == nullptr) {
+        // If s is empty, do nothing.
+        return *this;
+    }
+
+    if (this->head == nullptr) {
+        // If this string is empty, copy s into this.
+        this->head = list::copy(s.head);
+    } else {
+        // Append s to this string directly, assuming list::append modifies the first argument.
+        // Find the last node of 'this->head'
+        list::Node* last = this->head;
+        while (last->next != nullptr) {
+            last = last->next;
+        }
+
+        // Copy 's.head' and append it to the last node of 'this->head'
+        last->next = list::copy(s.head);
+    }
+
     return *this;
 }
 
