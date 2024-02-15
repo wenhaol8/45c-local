@@ -29,20 +29,17 @@ namespace list {
         }
     }
 
-    Node *copy(Node *head) {
-        if (!head) return nullptr;
+    Node* copy(Node* head) {
+        if (head == nullptr) return nullptr;
 
-        Node *new_head = new Node{head->data, nullptr};
-        Node *current_new = new_head;
-        Node *current_old = head->next;
+        Node dummy = {0, nullptr};
+        Node* tail = &dummy;
 
-        while (current_old) {
-            current_new->next = new Node{current_old->data, nullptr};
-            current_new = current_new->next;
-            current_old = current_old->next;
+        for (Node* curr = head; curr != nullptr; curr = curr->next) {
+            tail->next = new Node{curr->data, nullptr};
+            tail = tail->next;
         }
-
-        return new_head;
+        return dummy.next;
     }
 
     int compare(Node *lhs, Node *rhs) {

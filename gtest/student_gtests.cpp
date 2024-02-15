@@ -119,3 +119,4 @@ TEST(ListTests, Append) {
     list::free(list2);
     list::free(combined_list);
 }
+

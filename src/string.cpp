@@ -1,5 +1,4 @@
 #include "string.hpp"
-#include <iostream>
 #include <utility>
 #include <istream>
 #include <ostream>
@@ -13,7 +12,7 @@ String::String(const String& s) {
     head = list::copy(s.head);
 }
 
-String::String(String&& s) : head(s.head) {
+String::String(String&& s)  noexcept : head(s.head) {
     s.head = nullptr;
 }
 
@@ -33,7 +32,7 @@ String& String::operator=(const String& s) {
     return *this;
 }
 
-String& String::operator=(String&& s) {
+String& String::operator=(String&& s)  noexcept {
     if (this != &s) {
         list::free(head);
         head = s.head;
@@ -86,9 +85,19 @@ std::strong_ordering String::operator<=>(const String& s) const {
 }
 
 String String::operator+(const String& s) const {
-    list::Node* concatenated_head = list::append(head, s.head);
-    String concatenated_string(concatenated_head);
-    list::free(concatenated_head);
+    list::Node* concatenated_head = list::copy(head);
+
+    list::Node* tail = concatenated_head;
+    while (tail->next != nullptr) {
+        tail = tail->next;
+    }
+
+    list::Node* second_list_copy = list::copy(s.head);
+    tail->next = second_list_copy;
+
+    String concatenated_string;
+    concatenated_string.head = concatenated_head;
+
     return concatenated_string;
 }
 
