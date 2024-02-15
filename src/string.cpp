@@ -89,41 +89,36 @@ std::strong_ordering String::operator<=>(const String& s) const {
 }
 
 String String::operator+(const String& s) const {
-    // Handle case where the current string is empty
     if (head == nullptr) {
-        return s; // Return a copy of the second string
+        return s;
     }
-        // Handle case where the second string is empty
+
     else if (s.head == nullptr) {
-        return *this; // Return a copy of the current string
+        return *this;
     }
-
-    // Copy the current string's linked list
     list::Node* concatenated_head = list::copy(head);
-
-    // Find the tail of the copied list
     list::Node* tail = concatenated_head;
     while (tail && tail->next != nullptr) {
         tail = tail->next;
     }
-
-    // Copy the second string's linked list and append it to the tail
     list::Node* second_list_copy = list::copy(s.head);
-    if (tail) { // Ensure tail is not nullptr before dereferencing
+    if (tail) {
         tail->next = second_list_copy;
     }
-
-    // Create a new String object with the concatenated linked list
     String concatenated_string;
     concatenated_string.head = concatenated_head;
-
     return concatenated_string;
 }
 
 String& String::operator+=(const String& s) {
-    list::Node* concatenated_head = list::append(head, s.head);
-    list::free(head);
-    head = concatenated_head;
+    if (s.head == nullptr) {
+        return *this;
+    }
+    if (this->head == nullptr) {
+        this->head = list::copy(s.head);
+    } else {
+        this->head = list::append(this->head, list::copy(s.head));
+    }
     return *this;
 }
 

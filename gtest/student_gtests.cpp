@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "list.hpp"
+#include "string.hpp"
 
 using namespace std;
 using list::Node;
@@ -120,3 +121,48 @@ TEST(ListTests, Append) {
     list::free(combined_list);
 }
 
+//string_test
+
+TEST(StringClass, Constructor) {
+    String s("hello");
+    EXPECT_EQ(s.size(), 5);
+}
+
+TEST(StringClass, CopyConstructor) {
+    String original("test");
+    String copy(original);
+    EXPECT_EQ(copy, original);
+}
+
+TEST(StringClass, AssignmentOperator) {
+    String s1("first");
+    String s2 = s1;
+    EXPECT_EQ(s2, s1);
+}
+
+TEST(StringClass, Equality) {
+    String s1("test");
+    String s2("test");
+    EXPECT_TRUE(s1 == s2);
+}
+
+TEST(StringClass, Inequality) {
+    String s1("test");
+    String s2("diff");
+    EXPECT_TRUE(s1 != s2);
+}
+
+TEST(StringClass, Subscript) {
+    String s("hello");
+    EXPECT_EQ(s[1], 'e');
+}
+
+TEST(StringClass, OutOfBoundsSubscript) {
+    String s("hello");
+    // Assuming your class prints "ERROR" and returns '\0' for out-of-bounds
+    testing::internal::CaptureStdout();
+    char result = s[10]; // Out of bounds
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(result, '\0');
+    EXPECT_TRUE(output.find("ERROR") != std::string::npos);
+}
