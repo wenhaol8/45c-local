@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "list.hpp"
-#include "string.hpp"
+using namespace list;
 
 using namespace std;
 using list::Node;
@@ -35,89 +35,118 @@ TEST(ListTests, Length) {
 // Add remaining tests below. All tests should follow
 // the format of `TEST(ListTests, <TestName>){}`.
 
-TEST(ListTests, ReplaceMe) {
-    Node* const original_head = list::from_string("test");
-    Node* reversed_head = list::reverse(original_head);
-
-    const char* reversed_content = "tset";
-    for (Node* current = reversed_head; current != nullptr; current = current->next, ++reversed_content) {
-        EXPECT_EQ(current->data, *reversed_content);
-    }
-    EXPECT_EQ(*reversed_content, '\0');
-
-    list::free(original_head);
-    list::free(reversed_head);
-}
-/*
-TEST(ListTests, LengthEmpty) {
-    Node* const head = list::from_string("");
-    EXPECT_EQ(list::length(head), 0);
+TEST(ListTests, Print) {
+    std::ostringstream output;
+    Node* const head = list::from_string("test");
+    list::print(output, head);
+    EXPECT_EQ(output.str(), "test");
     list::free(head);
 }
 
-// Test the find_char function
-TEST(ListTests, FindChar) {
-    Node* const head = list::from_string("hello");
-    Node* const o_node = list::find_char(head, 'o');
-    ASSERT_NE(o_node, nullptr);
-    EXPECT_EQ(o_node->data, 'o');
-    list::free(head);
+TEST(ListTests, Copy) {
+    Node* original = from_string("test");
+    Node* copied = copy(original);
+    std::ostringstream original_str;
+    std::ostringstream copied_str;
+    print(original_str, original);
+    print(copied_str, copied);
+    EXPECT_EQ(original_str.str(), copied_str.str());
+    EXPECT_NE(original, copied);
+    free(original);
+    free(copied);
 }
 
-// Test the compare function for equal lists
-TEST(ListTests, CompareEqual) {
-    Node* const list1 = list::from_string("test");
-    Node* const list2 = list::from_string("test");
-    EXPECT_EQ(list::compare(list1, list2), 0);
-    list::free(list1);
-    list::free(list2);
+// Test for the compare function
+TEST(ListTests, Compare) {
+    Node* list1 = from_string("abc");
+    Node* list2 = from_string("abc");
+    Node* list3 = from_string("abd");
+    Node* list4 = from_string("ab");
+    EXPECT_EQ(compare(list1, list2), 0);
+    EXPECT_LT(compare(list1, list3), 0);
+    EXPECT_GT(compare(list3, list1), 0);
+    EXPECT_LT(compare(list4, list1), 0);
+    free(list1);
+    free(list2);
+    free(list3);
+    free(list4);
 }
 
-// Test the compare function for unequal lists
-TEST(ListTests, CompareUnequal) {
-    Node* const list1 = list::from_string("test");
-    Node* const list2 = list::from_string("toast");
-    EXPECT_NE(list::compare(list1, list2), 0);
-    list::free(list1);
-    list::free(list2);
+// Test for the reverse function
+TEST(ListTests, Reverse) {
+    Node* original = from_string("abc");
+    Node* reversed = reverse(original);
+    std::ostringstream reversed_str;
+    print(reversed_str, reversed);
+    EXPECT_EQ(reversed_str.str(), "cba");
+    free(original);
+    free(reversed);
 }
 
-// Test the nth function
-TEST(ListTests, Nth) {
-    Node* const head = list::from_string("hello");
-    Node* const third_node = list::nth(head, 2);
-    ASSERT_NE(third_node, nullptr);
-    EXPECT_EQ(third_node->data, 'l');
-    list::free(head);
-}
-
-// Test the last function
-TEST(ListTests, Last) {
-    Node* const head = list::from_string("hello");
-    Node* const last_node = list::last(head);
-    ASSERT_NE(last_node, nullptr);
-    EXPECT_EQ(last_node->data, 'o');
-    EXPECT_EQ(last_node->next, nullptr);
-    list::free(head);
-}
-
-// Test appending two lists
+// Test for the append function
 TEST(ListTests, Append) {
-    Node* const list1 = list::from_string("hello");
-    Node* const list2 = list::from_string("world");
-    Node* const combined_list = list::append(list1, list2);
-
-    // Check if the combined list is "helloworld"
-    const char* combined_content = "helloworld";
-    for (Node* current = combined_list; current != nullptr; current = current->next, ++combined_content) {
-        EXPECT_EQ(current->data, *combined_content);
-    }
-
-    // Should reach the end of the combined string
-    EXPECT_EQ(*combined_content, '\0');
-
-    list::free(list1);
-    list::free(list2);
-    list::free(combined_list);
+    Node* list1 = from_string("abc");
+    Node* list2 = from_string("def");
+    Node* appended = append(list1, list2);
+    std::ostringstream appended_str;
+    print(appended_str, appended);
+    EXPECT_EQ(appended_str.str(), "abcdef");
+    free(list1);
+    free(list2);
+    free(appended);
 }
-*/
+
+// Test for the index function
+TEST(ListTests, Index) {
+    Node* list = from_string("hello");
+    Node* n = nth(list, 2); // 'l'
+    EXPECT_EQ(index(list, n), 2);
+    EXPECT_EQ(index(list, nullptr), -1);
+    free(list);
+}
+
+// Test for the find_char function
+TEST(ListTests, FindChar) {
+    Node* list = from_string("hello");
+    Node* found = find_char(list, 'e');
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->data, 'e');
+    Node* not_found = find_char(list, 'x');
+    EXPECT_EQ(not_found, nullptr);
+    free(list);
+}
+
+// Test for the find_list function
+TEST(ListTests, FindList) {
+    Node* haystack = from_string("hello");
+    Node* needle = from_string("ll");
+    Node* found = find_list(haystack, needle);
+    ASSERT_NE(found, nullptr);
+    std::ostringstream found_str;
+    print(found_str, found);
+    EXPECT_EQ(found_str.str().substr(0, 2), "ll");
+    Node* not_found = find_list(haystack, from_string("world"));
+    EXPECT_EQ(not_found, nullptr);
+    free(haystack);
+    free(needle);
+}
+
+// Test for the nth function
+TEST(ListTests, Nth) {
+    Node* list = from_string("hello");
+    Node* third = nth(list, 2);
+    ASSERT_NE(third, nullptr);
+    EXPECT_EQ(third->data, 'l');
+    Node* out_of_bounds = nth(list, 5);
+    EXPECT_EQ(out_of_bounds, nullptr);
+    free(list);
+}
+
+// Test for the last function
+TEST(ListTests, Last) {
+    Node* list = from_string("test");
+    Node* last_node = last(list);
+    ASSERT_NE(last_node, nullptr);
+    EXPECT_EQ(last_node->data, 't');
+    free(list);
+}
