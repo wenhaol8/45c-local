@@ -1,6 +1,7 @@
 #include "string.hpp"
 #include <utility>
 #include <istream>
+#include <iostream>
 #include <ostream>
 #include <string>
 
@@ -46,8 +47,12 @@ bool String::in_bounds(int index) const {
 }
 
 char String::operator[](int index) const {
-    list::Node* node = list::nth(head, index);
-    return node ? node->data : '\0';
+    if (!in_bounds(index)) {
+        std::cout << "ERROR" << std::endl;
+
+        list::Node *node = list::nth(head, index);
+        return node ? node->data : '\0';
+    }
 }
 
 int String::size() const {
@@ -85,16 +90,31 @@ std::strong_ordering String::operator<=>(const String& s) const {
 }
 
 String String::operator+(const String& s) const {
+    // Handle case where the current string is empty
+    if (head == nullptr) {
+        return s; // Return a copy of the second string
+    }
+        // Handle case where the second string is empty
+    else if (s.head == nullptr) {
+        return *this; // Return a copy of the current string
+    }
+
+    // Copy the current string's linked list
     list::Node* concatenated_head = list::copy(head);
 
+    // Find the tail of the copied list
     list::Node* tail = concatenated_head;
-    while (tail->next != nullptr) {
+    while (tail && tail->next != nullptr) {
         tail = tail->next;
     }
 
+    // Copy the second string's linked list and append it to the tail
     list::Node* second_list_copy = list::copy(s.head);
-    tail->next = second_list_copy;
+    if (tail) { // Ensure tail is not nullptr before dereferencing
+        tail->next = second_list_copy;
+    }
 
+    // Create a new String object with the concatenated linked list
     String concatenated_string;
     concatenated_string.head = concatenated_head;
 
