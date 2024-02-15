@@ -84,10 +84,16 @@ namespace list {
     Node* reverse(Node* head) {
         Node* new_head = nullptr;
         while (head != nullptr) {
-            Node* next = head->next;
-            head->next = new_head;
-            new_head = head;
-            head = next;
+            // Allocate a new node with the same data as the current node
+            Node* node = new Node;
+            node->data = head->data;
+
+            // Insert the new node at the beginning of the new list
+            node->next = new_head;
+            new_head = node;
+
+            // Move to the next node in the original list
+            head = head->next;
         }
         return new_head;
     }
