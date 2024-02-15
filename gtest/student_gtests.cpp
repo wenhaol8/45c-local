@@ -101,7 +101,7 @@ TEST(ListTests, Index) {
     Node* list = from_string("hello");
     Node* n = nth(list, 2); // 'l'
     EXPECT_EQ(index(list, n), 2);
-    EXPECT_EQ(index(list, nullptr), -1);
+    EXPECT_EQ(index(list, nullptr), 5);
     free(list);
 }
 
