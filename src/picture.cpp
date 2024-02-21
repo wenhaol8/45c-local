@@ -72,6 +72,7 @@ void Picture::print_all(std::ostream& out) const {
 // Draw all shapes
 void Picture::draw_all(std::ostream& out) const {
     for (ListNode* node = head; node != nullptr; node = node->next) {
+        node->shape->print(out);
         node->shape->draw(out);
         //out << '\n';
     }

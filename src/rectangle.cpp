@@ -3,7 +3,7 @@
 
 #include "rectangle.hpp"
 
-Rectangle::Rectangle(Point center, std::string name, double width, double height)
+Rectangle::Rectangle(Point center, std::string name, int width, int height)
         : Shape(center, std::move(name)), width(width), height(height) {}
 
 

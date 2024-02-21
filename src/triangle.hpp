@@ -6,7 +6,7 @@
 
 class Triangle : public Shape {
 public:
-    Triangle(Point center, std::string name, double base, double height);
+    Triangle(Point center, std::string name, int base, int height);
     //void print(std::ostream& out) const override;
     double area() const override;
     void draw(std::ostream& out) const override;

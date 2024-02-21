@@ -14,17 +14,9 @@ double Circle::area() const {
 
 // Draw method for circle - ASCII art
 void Circle::draw(std::ostream& out) const {
-    int diameter = radius * 2;
-    for (int y = 0; y <= diameter; y += 2) {
-        for (int x = 0; x <= diameter; ++x) {
-            // Using the equation of a circle to determine if the point (x, y) is inside the circle
-            int dx = radius - x; // horizontal distance from the center
-            int dy = radius - y; // vertical distance from the center
-            if (dx*dx + dy*dy <= radius*radius) {
-                out << '*';
-            } else {
-                out << ' ';
-            }
+    for(int y = -radius; y <= radius; y += 2){
+        for(int x = -radius; x<= radius; ++x){
+            out << (x * x + y * y <= radius * radius ? '*' : ' ');
         }
         out << '\n';
     }

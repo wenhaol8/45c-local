@@ -6,7 +6,7 @@
 
 class Square : public Rectangle {
 public:
-    Square(Point center, std::string name, double side);
+    Square(Point center, std::string name, int side);
 
     // No need to override area or draw, as they are the same for squares and rectangles
     // Only the constructor is different to ensure width and height are the same

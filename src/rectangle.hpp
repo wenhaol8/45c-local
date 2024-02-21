@@ -6,7 +6,7 @@
 
 class Rectangle : public Shape {
 public:
-    Rectangle(Point center, std::string name, double width, double height);
+    Rectangle(Point center, std::string name, int width, int height);
     //void print(std::ostream& out) const override;
     double area() const override;
     void draw(std::ostream& out) const override;
