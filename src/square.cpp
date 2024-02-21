@@ -1,7 +1,7 @@
 #include "square.hpp"
 
-Square::Square(Point center, double side, std::string name)
-        : Rectangle(center, side, side, std::move(name)) {}
+Square::Square(Point center, std::string name, double side)
+        : Rectangle(center, std::move(name), side, side) {}
 
 Shape* Square::clone() const {
     return new Square(*this);

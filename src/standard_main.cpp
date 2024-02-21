@@ -31,6 +31,6 @@ int main(int argc, char** argv) {
         add_shapes(collage, i, param1, param2);
     }
     cout << "Total Area = " << collage.total_area() << endl;
-    collage.Print_all(cout);
+    collage.print_all(cout);
     collage.draw_all(cout);
 }

@@ -3,8 +3,10 @@
 
 #include "rectangle.hpp"
 
-Rectangle::Rectangle(Point center, double width, double height, std::string name)
+Rectangle::Rectangle(Point center, std::string name, double width, double height)
         : Shape(center, std::move(name)), width(width), height(height) {}
+
+
 
 void Rectangle::draw(std::ostream& out) const {
     for (int i = 0; i < height; i += 2) {

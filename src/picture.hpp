@@ -17,7 +17,7 @@ public:
     Picture& operator=(Picture&& other);
 
     void add(const Shape& shape);
-    void Print_all(std::ostream& out) const;
+    void print_all(std::ostream& out) const;
     void draw_all(std::ostream& out) const;
     double total_area() const;
 

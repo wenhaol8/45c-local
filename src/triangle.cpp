@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-Triangle::Triangle(Point center, double base, double height, std::string name)
+Triangle::Triangle(Point center, std::string name, double base, double height)
         : Shape(center, std::move(name)), base(base), height(height) {}
 
 void Triangle::draw(std::ostream& out) const {
