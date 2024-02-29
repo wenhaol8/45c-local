@@ -57,7 +57,6 @@ template <typename T>
 std::ostream& operator<<(std::ostream& out, const Matrix<T>& matrix) {
     out << std::fixed << std::setprecision(2);
     for (int i = 0; i < matrix.num_rows(); ++i) {
-        out << "    ";
         for (int j = 0; j < matrix.num_cols(); ++j) {
             if (j > 0) {
                 out << " ";
