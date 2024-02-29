@@ -77,8 +77,7 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& array) {
     temp << std::setprecision(2) << std::fixed << std::right;
 
     for (int i = 0; i < array.length(); ++i) {
-        if (i > 0) temp << " ";
-        temp << array[i];
+        temp << std::setw(8) << array[i];
     }
 
     out << temp.str();

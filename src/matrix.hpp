@@ -53,12 +53,13 @@ private:
 
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const Matrix<T>& matrix) {
+    out << std::fixed << std::setprecision(2);
     for (int i = 0; i < matrix.num_rows(); ++i) {
         for (int j = 0; j < matrix.num_cols(); ++j) {
-            if (j > 0) out << " ";
-            out << matrix[i][j];
+            out << std::setw(8) << matrix[i][j]; // Again, adjust the width as needed
+            if (j < matrix.num_cols() - 1) out << " "; // Space between elements, except after the last in a row
         }
-        out << "\n";
+        if (i < matrix.num_rows() - 1) out << "\n"; // Newline after each row, except after the last
     }
     return out;
 }
