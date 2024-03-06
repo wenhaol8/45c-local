@@ -47,8 +47,8 @@ namespace {
 
 
 void Student::validate() const {
-    for (int score : quiz) validate_score(score);
-    for (int score : hw) validate_score(score);
+    std::for_each(quiz.begin(), quiz.end(), validate_score);
+    std::for_each(hw.begin(), hw.end(), validate_score);
     validate_score(static_cast<int>(final_score));
 }
 
@@ -111,19 +111,19 @@ std::ostream& operator<<(std::ostream& out, const Student& s) {
 
 
 void Gradebook::compute_grades() {
-    for (Student& student : students) {
-        student.compute_grade();
-    }
+    std::for_each(students.begin(), students.end(), [](Student& s) {
+        s.compute_grade();
+    });
 }
 
 void Gradebook::sort() {
     std::sort(students.begin(), students.end());
 }
 
-void Gradebook::validate() {
-    for (const Student& student : students) {
-        student.validate();
-    }
+void Gradebook::validate(){
+    std::for_each(students.begin(), students.end(), [](const Student& s) {
+        s.validate();
+    });
 }
 
 
