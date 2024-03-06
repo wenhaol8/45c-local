@@ -13,22 +13,20 @@ std::string to_lowercase(const std::string& str) {
 
 std::set<std::string> load_stopwords(std::istream& stopwords) {
     std::set<std::string> stopwords_set;
-    std::string word;
-    while (stopwords >> word) {
-        stopwords_set.insert(to_lowercase(word));
-    }
+    std::istream_iterator<std::string> it(stopwords), end;
+    std::transform(it, end, std::inserter(stopwords_set, stopwords_set.end()), to_lowercase);
     return stopwords_set;
 }
 
 std::map<std::string, int> count_words(std::istream& document, const std::set<std::string>& stopwords) {
     std::map<std::string, int> word_counts;
-    std::string word;
-    while (document >> word) {
-        word = to_lowercase(word);
-        if (!stopwords.contains(word)) {
-            ++word_counts[word];
+    std::istream_iterator<std::string> it(document), end;
+    std::for_each(it, end, [&word_counts, &stopwords](const std::string& word) {
+        std::string lower_word = to_lowercase(word);
+        if (!stopwords.contains(lower_word)) {
+            ++word_counts[lower_word];
         }
-    }
+    });
     return word_counts;
 }
 
