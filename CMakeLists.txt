@@ -5,7 +5,9 @@ project(HW8 CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+set(SANITIZE_FLAGS "-fsanitize=address,undefined")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SANITIZE_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SANITIZE_FLAGS}")
 
 add_library(mapset_obj OBJECT
     src/mapset.cpp
