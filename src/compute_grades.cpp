@@ -139,8 +139,8 @@ std::ostream& operator<<(std::ostream& out, const Student& s) {
         << "QZ Ave: " << s.quiz_avg << "\n"
         << "Final:  " << s.final_score << "\n"
         << "Total:  " << s.course_score << "\n"
-        << "Grade:  " << s.course_grade << "\n"
-        <<"\n";
+        << "Grade:  " << s.course_grade << "\n";
+    out<<"\n";
     return out;
 }
 
