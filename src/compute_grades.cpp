@@ -140,7 +140,6 @@ std::ostream& operator<<(std::ostream& out, const Student& s) {
         << "Final:  " << s.final_score << "\n"
         << "Total:  " << s.course_score << "\n"
         << "Grade:  " << s.course_grade << "\n";
-    out<<"\n";
     return out;
 }
 
