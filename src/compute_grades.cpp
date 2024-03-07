@@ -94,7 +94,7 @@ std::istream& operator>>(std::istream& in, Student& s) {
     std::string line, keyword;
 
 
-    if (std::getline(in, line)) {
+    if (std::getline(in, line) && !line.empty()) {
         std::istringstream iss(line);
         iss >> keyword;
         if (keyword == "Name") {
@@ -104,7 +104,7 @@ std::istream& operator>>(std::istream& in, Student& s) {
         }
     }
 
-    if (std::getline(in, line)) {
+    if (std::getline(in, line) && !line.empty()) {
         std::istringstream iss(line);
         iss >> keyword;
         if (keyword == "Quiz") {
@@ -112,7 +112,7 @@ std::istream& operator>>(std::istream& in, Student& s) {
         }
     }
 
-    if (std::getline(in, line)) {
+    if (std::getline(in, line) && !line.empty()) {
         std::istringstream iss(line);
         iss >> keyword;
         if (keyword == "HW") {
@@ -120,7 +120,7 @@ std::istream& operator>>(std::istream& in, Student& s) {
         }
     }
 
-    if (std::getline(in, line)) {
+    if (std::getline(in, line) && !line.empty()) {
         std::istringstream iss(line);
         iss >> keyword;
         if (keyword == "Final") {
