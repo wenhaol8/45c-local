@@ -134,12 +134,12 @@ std::istream& operator>>(std::istream& in, Student& s) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Student& s) {
-    out << "Name: " << s.last_name << " " << s.first_name << "\n" // Added space between last and first names
+    out << "Name:  " << s.first_name << " " << s.last_name << "\n" // Added space between last and first names
         << "HW Ave: " << s.hw_avg << "\n"
         << "QZ Ave: " << s.quiz_avg << "\n"
-        << "Final: " << s.final_score << "\n"
-        << "Total: " << s.course_score << "\n"
-        << "Grade: " << s.course_grade << "\n\n";
+        << "Final: " << std::setw(3)<< s.final_score << "\n"
+        << "Total: " << std::setw(3)<< s.course_score << "\n"
+        << "Grade: " << std::setw(3)<< s.course_grade << "\n\n";
     return out;
 }
 
