@@ -77,30 +77,64 @@ void Student::compute_hw_avg() {
 }
 
 void Student::compute_course_score() {
-    final_score = round(0.4 * quiz_avg + 0.3 * hw_avg + 0.3 * final_score);
+    course_score = std::round(0.4 * quiz_avg + 0.3 * hw_avg + 0.3 * final_score);
 }
 
-// Overloaded stream operators for Student
+
+void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+
 std::istream& operator>>(std::istream& in, Student& s) {
+
+    s = Student();
     std::string line, keyword;
-    while (std::getline(in, line) && !line.empty()) {
+
+
+    if (std::getline(in, line)) {
         std::istringstream iss(line);
         iss >> keyword;
         if (keyword == "Name") {
-            iss >> s.first_name >> s.last_name;
-        } else if (keyword == "Quiz") {
-            s.quiz.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
-        } else if (keyword == "HW") {
-            s.hw.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
-        } else if (keyword == "Final") {
+            iss >> s.first_name; // Read the first name
+            std::getline(iss, s.last_name); // Read the last name(s)
+            rtrim(s.last_name); // Trim trailing whitespace from last name
+        }
+    }
+
+    if (std::getline(in, line)) {
+        std::istringstream iss(line);
+        iss >> keyword;
+        if (keyword == "Quiz") {
+            s.quiz = std::vector<int>(std::istream_iterator<int>(iss), {});
+        }
+    }
+
+    if (std::getline(in, line)) {
+        std::istringstream iss(line);
+        iss >> keyword;
+        if (keyword == "HW") {
+            s.hw = std::vector<int>(std::istream_iterator<int>(iss), {});
+        }
+    }
+
+    if (std::getline(in, line)) {
+        std::istringstream iss(line);
+        iss >> keyword;
+        if (keyword == "Final") {
             iss >> s.final_score;
         }
     }
+
+    std::getline(in, line);
+
     return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Student& s) {
-    out << "Name: " << s.last_name << ", " << s.first_name << "\n"
+    out << "Name: " << s.last_name << " " << s.first_name << "\n" // Added space between last and first names
         << "HW Ave: " << s.hw_avg << "\n"
         << "QZ Ave: " << s.quiz_avg << "\n"
         << "Final: " << s.final_score << "\n"
@@ -108,7 +142,6 @@ std::ostream& operator<<(std::ostream& out, const Student& s) {
         << "Grade: " << s.course_grade << "\n\n";
     return out;
 }
-
 
 void Gradebook::compute_grades() {
     std::for_each(students.begin(), students.end(), [](Student& s) {
@@ -126,11 +159,13 @@ void Gradebook::validate(){
     });
 }
 
-
 std::istream& operator>>(std::istream& in, Gradebook& b) {
     Student student;
     while (in >> student) {
         b.students.push_back(student);
+        if (in.peek() == '\n') {
+            in.ignore();
+        }
     }
     return in;
 }
